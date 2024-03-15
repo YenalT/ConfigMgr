@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Savunma Sanayii Operating System Deployment Tools</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+
+<HTA:APPLICATION
+APPLICATIONNAME="Savunma Sanayii OS Deployment Tools"
+BORDER="thin"
+BORDERSTYLE="normal"
+CAPTION="yes"
+CONTEXTMENU="no"
+INNERBORDER="no"
+MAXIMIZEBUTTON="no"
+MINIMIZEBUTTON="no"
+NAVIGABLE="no"
+SCROLL="no"
+SCROLLFLAT="no"
+SELECTION="no"
+SHOWINTASKBAR="no"
+SINGLEINSTANCE="yes"
+SYSMENU="no"
+WINDOWSTATE="normal"
+/>
+
+<script language="vbscript" type="text/vbscript"> 
+	'	Set objects and declare global variables 
+		
+		Set ProgressUI = CreateObject("Microsoft.SMS.TsProgressUI")
+		ProgressUI.CloseProgressDialog
+		
+		DIM strDepartment 
+		DIM strPrimaryUser
+		
+		Sub Window_onLoad 
+			window.resizeTo 700,500    ' Resize the HTA window on first load 
+			window.moveTo 170, 50    ' Move the window to the center 
+		End Sub 
+
+
+
+		Sub FinishHTA 
+		
+			Dim env
+			Set env = CreateObject("Microsoft.SMS.TSEnvironment") 
+			env("OSDComputerName") = ComputerName.Value
+			env("OsSetupType") = KurulumTipi.Value
+			env("SMSTSAssignUsersMode") = "Auto"
+			
+			self.close
+		End Sub
+		
+		 
+	</script> 
+
+<body style="border: 1px solid #D0D0D0; font-size: 12px; font-family: 'Segoe UI',Tahoma,verdana,arial; color: #606060; ">
+
+<img src="logo.png" width="200" height="45px" style="float:right" />
+
+<p>Savunma Sanayii Baskanligi Operating System Deployment Operating System Deployment Tool<br>CfgMgr 2023 R2<br>(c) 2024 - Yenal Tirpanci<br></p><hr/>
+<p><b> Lutfen Gerekli ve Uygun Olan Secenekleri Secerek Kuruluma Baslayiniz</p></b>
+<BR>
+<tr>
+                         <td><b>Bilgisayar Adi:</b></td>
+                         <td>
+                              <input type="text" id="ComputerName" name='ComputerName'> Turkce karakter Kullanmayiniz!!!
+                         </td>
+ </tr>
+
+
+
+<p><b>Kurulum Tipini Seciniz:</b></p>
+<p>Kurulum Tipini Seciniz:                       
+			<select size="1" name="KurulumTipi"> 
+				<Option value="NewOSSetup">Yeni Kurulum</Option> 
+				<Option value="ComputerChange">Bilgisayar Degisimi</Option> 
+			</Select><BR>
+<p>* Yeni Kurulum Secimini yaparsaniz Active Directory altinda yer alan Computer objesi silinir ve tanimlanan isimle yeni bir Computer Objesi olusturulur!!!</p>
+<p>* Bilgisayar Degisimi Secimi yaparsaniz Active Directory altinda Computer objesi silinmez.Sizin verdiginiz Computer ismi ile yeni Computer Objesi olusturulur!!! .</p>
+<br>
+<button accesskey=N type=submit id=FinishHTA onclick=FinishHTA >Start Tasksequence</button>&nbsp&nbsp
+<button onclick="RunCMtrace">CMTrace</button>&nbsp&nbsp
+<button onclick="RunDiskpart">Diskpart</button>&nbsp&nbsp
+<button onclick="RunCMD">CMD</button>
+</body>
+</html>
